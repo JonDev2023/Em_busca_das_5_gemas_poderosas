@@ -14,7 +14,6 @@ public class Game extends Canvas implements Runnable {
 	public int game_seconds = 1000 * (60 * 25) * 60;
 	public int level_seconds = 1000 * (60 * 5) * 60;
 	public int updates = 1;
-	public Spawner spawner;
 	
 	public Game() {
 		Dimension dimension = new Dimension(width, height);
@@ -26,7 +25,6 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void update() {
-		spawner.update();
 		game_seconds--;
 		level_seconds--;
 		if(game_seconds <= 0) {
@@ -60,9 +58,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.white);
 		g.setFont(new Font("Arial", Font.BOLD, 23));
 		g.drawString("Segundos Necessários do Jogo: " + (game_seconds / 60), width - 600, 90);
-		
-		spawner.render(g);
-		
+				
 		bs.show();
 	}
 	
