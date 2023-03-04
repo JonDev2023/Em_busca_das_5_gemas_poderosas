@@ -3,12 +3,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable {
+public class Level_1 extends Canvas implements Runnable {
 	
 	public String root = "../../";
 	public int fps = 60;
@@ -18,10 +16,15 @@ public class Game extends Canvas implements Runnable {
 	public int level_seconds = 1000 * (60 * 5) * 60;
 	public int updates = 1;
 	public TextureLoader texture_loaderP = new TextureLoader(root + 
-			"Assets/Texturas/Player/anim1_walk.png");
+			"Assets/Texturas/Player/Walk/anim1.png");
 	public BufferedImage player = texture_loaderP.loadTexture();
+	public int player_x = width - 96 / 2;
+	public int player_y = height - 96 / 2;
+	public String anim;
+	public String anim1 = root + 
+			"Assets/Texturas/Player/Walk/anim1.png";
 	
-	public Game() {
+	public Level_1() {
 		Dimension dimension = new Dimension(width, height);
 		this.setPreferredSize(dimension);
 		this.player = player;
@@ -32,6 +35,8 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void update() {
+		// vai ter um if
+		anim = anim1;
 		game_seconds--;
 		level_seconds--;
 		if(game_seconds <= 0) {
@@ -44,6 +49,8 @@ public class Game extends Canvas implements Runnable {
 			System.out.println("Waring!");
 			level_seconds = 0;
 		}
+		texture_loaderP = new TextureLoader(anim);
+		player = texture_loaderP.loadTexture();
 	}
 	
 	public void render() {
@@ -66,22 +73,9 @@ public class Game extends Canvas implements Runnable {
 		g.setFont(new Font("Arial", Font.BOLD, 23));
 		g.drawString("Segundos Necessários do Jogo: " + (game_seconds / 60), width - 600, 90);
 		
-		g.drawImage(player, width / 2, height / 2, null);
+		g.drawImage(player, player_x, player_y, null);
 				
 		bs.show();
-	}
-	
-	public static void main(String[] args) {
-		Game game = new Game();
-		JFrame jframe = new JFrame("Em busca das 5 gemas poderosas");
-		jframe.add(game);
-		jframe.setLocationRelativeTo(null);
-		jframe.pack();
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		jframe.setVisible(true);
-		
-		new Thread(game).start();
 	}
 
 	@Override
