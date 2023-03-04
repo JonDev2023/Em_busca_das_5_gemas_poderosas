@@ -3,21 +3,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
 	
+	public String root = "../../";
 	public int fps = 60;
 	public int width = 800;
 	public int height = 600;
 	public int game_seconds = 1000 * (60 * 25) * 60;
 	public int level_seconds = 1000 * (60 * 5) * 60;
 	public int updates = 1;
+	public TextureLoader texture_loaderP = new TextureLoader(root + 
+			"Assets/Texturas/Player/anim1_walk.png");
+	public BufferedImage player = texture_loaderP.loadTexture();
 	
 	public Game() {
 		Dimension dimension = new Dimension(width, height);
 		this.setPreferredSize(dimension);
+		this.player = player;
 	}
 	
 	public int second(int time) {
@@ -58,6 +65,8 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.white);
 		g.setFont(new Font("Arial", Font.BOLD, 23));
 		g.drawString("Segundos Necessários do Jogo: " + (game_seconds / 60), width - 600, 90);
+		
+		g.drawImage(player, width / 2, height / 2, null);
 				
 		bs.show();
 	}
